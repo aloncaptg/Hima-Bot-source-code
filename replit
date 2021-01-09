@@ -1,0 +1,2 @@
+Language = "Python"
+run = "pip install PyNaCl"
