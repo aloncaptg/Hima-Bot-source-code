@@ -1,8 +1,7 @@
 # Hima
 
 
-Hello welcome to this repl this is hima bot source code!
-
+Hello welcome to this repo is hima bot source code
 The prefix is: hm!
 
 customizable prefix!
