@@ -24,7 +24,7 @@ from important import new_prefix
 from io import BytesIO
 from discord.ext import commands , tasks
 from webserver import keep_alive
-
+# ------------------------ Others ------------------------ #
 Pfp = os.environ.get('PFP')
 intents = discord.Intents.all()
 
@@ -42,8 +42,9 @@ def get_prefix(client,message):
 
     prefix = prefixes[str(message.guild.id)]
     return commands.when_mentioned_or(prefix,prefix.upper(),prefix.lower())(client,message)
+# ------------------------ Prefix ------------------------ #
 client = commands.Bot(command_prefix=get_prefix, intents=intents, case_insensitive = True)
-client.case_insensitive = True
+client.remove_command('help') 
 
 @client.group(case_insensitive = True,invoke_without_command = True)
 @commands.guild_only()
@@ -63,10 +64,6 @@ async def prefixset(ctx,prefix):
     embed.set_author(name='Prefix')
     await ctx.send(embed=embed)
 
-#other
-client.remove_command('help')   
-filtered_words = ['capt']
-#small
 @client.event
 async def on_guild_join(guild):
     with open("prefixes.json", "r") as f:
@@ -76,7 +73,7 @@ async def on_guild_join(guild):
 
     with open("prefixes.json", "w") as f:
         json.dump(prefixes,f)
-
+# ------------------------ Events ------------------------ #
 
 
 @client.event
@@ -129,27 +126,16 @@ async def presence():
         await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"hm!invite | Hima"))
         await asyncio.sleep(2)
 client.loop.create_task(presence())
-@client.command()
-@commands.is_owner()
-@commands.cooldown(1, 2, commands.BucketType.user)
-async def restart(ctx):
-        await ctx.send('Shutting down the bot!')
-        await client.logout()
-        await client.login()
 
 @client.command()
 @commands.cooldown(1, 2, commands.BucketType.user)
-async def ping(ctx):
+async def botping(ctx):
     await ctx.send(f"Pong 🏓, The bot ping is {round(client.latency * 1000)}ms")
-@client.command()
-@commands.cooldown(1, 2, commands.BucketType.user)
-async def botpfp(ctx):
-        await ctx.send(f"{client.user.avatar_url}")
 
 
-#cogs
+
 def setup(bot):
-    exts = ['Moderation', 'Giveaway','Reddit','Music','Fun','ErrorHandler','Automod','Image','Events','Poll','Misc','Utility','Math','Help','Snipe','games']
+    exts = ['Moderation', 'Giveaway','Reddit','Music','Fun','ErrorHandler','Automod','Image','Events','Poll','Misc','Utility','Math','Help','Snipe','games',]
 
     if __name__ == "__main__":
         for cog in exts:

@@ -364,7 +364,7 @@ class Moderation(commands.Cog):
         try:
                 await ctx.channel.purge(limit=amount+1)
                 embed = discord.Embed(
-                    description=f"{ctx.author.mention}, Deleted `{amount}` messages! <a:BlackVerifyCheck:774476123878457354>",
+                    description=f"{ctx.author.mention}, Deleted `{amount}` messages! {yesemoji}",
                     color=ctx.author.colour
                     
                     )
